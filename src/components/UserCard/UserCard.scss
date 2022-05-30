@@ -1,8 +1,11 @@
 .container {
   border: 2px solid black;
   border-radius: 5px;
-  max-width: 400px;
+  padding: 5px;
+  max-width: 280px;
   width: 100%;
   cursor: pointer;
   margin: 5px 10px;
+  text-decoration: none;
+  color: black;
 }

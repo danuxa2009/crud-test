@@ -1,64 +1,47 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"
-import { AddUserForm, Button, UserCard, Modal } from "../../components";
-import './UsersList.scss'
+import './UsersList.scss';
+import { useContext, useState } from 'react';
+import { AddUserForm, Button, UserCard, Modal } from '../../components';
+import { UsersContext } from '../../utils/context';
 
 export const UsersList = () => {
+  const { usersData } = useContext(UsersContext);
+  const [isModalOpened, setIsModalOpened] = useState(false);
 
-  const navigate = useNavigate();
-  const [usersData, setUsersData] = useState([])
-  const [isModalOpened, setIsModalOpened] = useState(false)
-  const getUsers = JSON.parse(localStorage.getItem("UsersList"));
-
-
-  const handleClick = (id) => {
-    navigate(`user/${id}`);
-  }
-  
-  useEffect(() => {
-    if (getUsers === null) {
-      setUsersData([])
-    } else {
-      setUsersData(getUsers);
-    }
-    }, [])
+  const openModalHandler = () => {
+    setIsModalOpened(!isModalOpened);
+  };
 
   return (
-    <div className='wrapper'>
-      <div className='users-list-container'>
+    <div className="wrapper">
+      <div className="users-list-container">
 
         {
-          usersData?.length 
-          ? 
-          usersData.map(({name, lastName, id, email}) => (
-            <UserCard 
-              key={id}
-              name={name}
-              lastName={lastName}
-              id={id}
-              email={email}
-              onClick={() => handleClick(id)} />))
-            :
-            <p>Users is not exists</p>
-            
+          usersData?.length
+            ? usersData.map(({ name, lastName, id, email }) => (
+              <UserCard
+                key={id}
+                name={name}
+                lastName={lastName}
+                id={id}
+                email={email}
+              />
+            ))
+            : <p>Users is not exists</p>
+
         }
 
       </div>
       {
-        isModalOpened && 
-        <Modal modalText={'Add new user'} onCloseHandler={setIsModalOpened}>
-          <AddUserForm
-            usersData={usersData}
-            usersCount={usersData.length}
-            setIsModalOpened={setIsModalOpened}
-            setUsersData={setUsersData}
-            />
+        isModalOpened
+        && (
+        <Modal modalText="Add new user" onCloseHandler={setIsModalOpened}>
+          <AddUserForm setIsModalOpened={setIsModalOpened} />
         </Modal>
+        )
       }
 
-      <Button className={'add-user-button'} text={'Add new user'} onClick={() => setIsModalOpened(!isModalOpened)} />
-      
+      <Button className="add-user-button" text="Add new user" onClick={openModalHandler} />
+
     </div>
-  )
-  
-}
+  );
+};

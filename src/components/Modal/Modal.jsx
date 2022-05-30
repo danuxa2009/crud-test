@@ -1,27 +1,26 @@
-import { useRef } from "react"
-import './Modal.scss'
+import './Modal.scss';
 
-export const Modal = (
-  { modalText,
-    children,
-    onCloseHandler
-  }
-  ) => {
+import { useRef } from 'react';
 
-  const modalRef = useRef()
+export function Modal({
+  modalText,
+  children,
+  onCloseHandler,
+}) {
+  const modalRef = useRef();
 
   const closeModal = (e) => {
-    if(modalRef.current === e.target) {
-      onCloseHandler(false)
+    if (modalRef.current === e.target) {
+      onCloseHandler(false);
     }
-  }
+  };
 
-  return(
-    <div className={'modal'} ref={modalRef} onClick={closeModal}>
-      <div className={'modal-container'}>
-        <p className={'modal-text'}>{modalText}</p>
+  return (
+    <div className="modal" ref={modalRef} onClick={closeModal}>
+      <div className="modal-container">
+        <p className="modal-text">{modalText}</p>
         {children}
       </div>
     </div>
-  )
+  );
 }
