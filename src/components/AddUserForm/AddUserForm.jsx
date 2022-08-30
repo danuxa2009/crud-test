@@ -11,8 +11,9 @@ export function AddUserForm({ setIsModalOpened }) {
   const userId = usersData.length + 1;
   const newUser = { id: userId, ...userData };
 
+  const a = 'localStorage';
   const hi = '123';
-  console.log(hi);
+  console.log(hi, a);
 
   const handleSubmit = (e) => {
     e.preventDefault();
